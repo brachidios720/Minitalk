@@ -6,41 +6,33 @@
 #    By: rcarbonn <rcarbonn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/04 13:47:39 by rcarbonn          #+#    #+#              #
-#    Updated: 2023/09/07 17:51:21 by rcarbonn         ###   ########.fr        #
+#    Updated: 2023/09/08 20:36:17 by rcarbonn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# -- Commande -- #
-
-RM    = rm -f
-CC    = gcc
-FL    = -Wall -Werror -Wextra
-COMP    = $(CC) $(FL)
+RM	= rm -f
+CC	= cc
+FL	= -Wall -Werror -Wextra
+COMP	= $(CC) $(FL)
 
 # -- SRC -- #
 
-SRC =  serveur.c\
-		client.c\	
+SRCC	= 	srcs/client/client.c
 
+SRCS	=	srcs/server/server.c
 
-SRCO    = $(SRC:.c=.o)
+all: server client
 
-NAME    = minitalk.a
-
-# -- Target -- #
-
-all:		$(NAME) 
-
-$(NAME): $(OBJ)
-		$(CC) -Wall -Werror -Wextra -c $(SRC)
-		ar -rc $(NAME) $(OBJ)
+client:
+	$(CC) $(FL) $(SRCC) -o client
+	
+server:
+	$(CC) $(FL) $(SRCS) -o server
 
 clean:
-		$(RM) $(OBJ)
+	$(RM) server client
 
-fclean:
-		$(RM) $(NAME) $(OBJ)
+fclean: clean
+	$(RM) **.o
 
-re:		fclean all
-
-.PHONY: all clean fclean re
+re:			clean all
